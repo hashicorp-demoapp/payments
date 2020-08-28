@@ -14,7 +14,7 @@ jobs:
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/postgres:9.4
 
-    working_directory: ~/repo
+    working_directory: ~/payments
 
     environment:
       # Customize the JVM maximum heap limit
@@ -40,3 +40,69 @@ jobs:
 
       # run tests!
       - run: gradle test
+      
+      # run build!
+      - run: gradle build
+
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - payments
+
+   publish-docker-release:
+    docker:
+      - image: circleci/golang:1.13
+    environment:
+      GO111MODULE: "on"
+    working_directory: ~/payments
+    steps:
+      - setup_remote_docker
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: docker login
+          command: docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
+      - run:
+          name: docker build
+          command: |
+            docker build -t hashicorpdemoapp/payments:${CIRCLE_TAG} .
+      - run:
+          name: docker push
+          command: |
+            docker push hashicorpdemoapp/payments:${CIRCLE_TAG}
+  publish-github-release:
+    docker:
+      - image: cibuilds/github:0.10
+    working_directory: ~/payments
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: "Publish Release on GitHub"
+          command: |
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -replace ${CIRCLE_TAG} ./bin/
+
+workflows:
+  version: 2
+  build-and-release:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /.*/
+      - publish-docker-release:
+          requires:
+            - build
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+      - publish-github-release:
+          requires:
+            - build
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
