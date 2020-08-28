@@ -2,6 +2,8 @@
 
 Dummy payments gateway written with Java SpringBoot
 
+[![CircleCI](https://circleci.com/gh/hashicorp-demoapp/payments.svg?style=svg)](https://circleci.com/gh/hashicorp-demoapp/payments)  
+
 Docker Hub Image: [https://hub.docker.com/repository/docker/hashicorpdemoapp/payments](https://hub.docker.com/repository/docker/hashicorpdemoapp/payments)
 
 ## Usage
