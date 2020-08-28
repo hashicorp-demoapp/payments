@@ -45,25 +45,26 @@ jobs:
           paths:
             - payments
 
-   publish-docker-release:
-    docker:
-      - image: circleci/openjdk:8-jdk
-    working_directory: ~/payments
-    steps:
-      - setup_remote_docker
-      - attach_workspace:
-          at: ~/
-      - run:
-          name: docker login
-          command: docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
-      - run:
-          name: docker build
-          command: |
-            docker build -t hashicorpdemoapp/payments:${CIRCLE_TAG} .
-      - run:
-          name: docker push
-          command: |
-            docker push hashicorpdemoapp/payments:${CIRCLE_TAG}
+  publish-docker-release:
+   docker:
+     - image: circleci/openjdk:8-jdk
+   working_directory: ~/payments
+   steps:
+     - setup_remote_docker
+     - attach_workspace:
+         at: ~/
+     - run:
+         name: docker login
+         command: docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
+     - run:
+         name: docker build
+         command: |
+           docker build -t hashicorpdemoapp/payments:${CIRCLE_TAG} .
+     - run:
+         name: docker push
+         command: |
+           docker push hashicorpdemoapp/payments:${CIRCLE_TAG}
+
   publish-github-release:
     docker:
       - image: cibuilds/github:0.10
@@ -85,6 +86,7 @@ workflows:
             tags:
               only: /.*/
       - publish-docker-release:
+          context: "DOCKER_USER"
           requires:
             - build
           filters:
@@ -93,6 +95,7 @@ workflows:
             branches:
               ignore: /.*/
       - publish-github-release:
+          context: "DOCKER_USER"
           requires:
             - build
           filters:
