@@ -1,9 +1,11 @@
 package payments;
 
-import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.redis.core.RedisHash;
 
 @RedisHash("payment")
+@TypeAlias("payments")
 class Payment {
 
 	@Id

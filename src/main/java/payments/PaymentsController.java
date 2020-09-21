@@ -2,11 +2,12 @@ package payments;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,11 +21,6 @@ public class PaymentsController {
 	@Autowired
 	PaymentRepository repo;
 
-	@GetMapping("/health")
-	public String index() {
-		return "Ok";
-	}
-
 	@PostMapping("/")
 	@ResponseBody
 	public PaymentResponse pay(@RequestBody PaymentRequest request) {
@@ -37,7 +33,6 @@ public class PaymentsController {
 		logger.info("CC Expiration: {}", request.getExpiry());
 		logger.info("CC CVC: {}", request.getCvc());
 
-		
 		CreditCard cc = new CreditCard();
 		cc.setType(request.getType());
 		cc.setNumber(request.getNumber());
@@ -50,8 +45,9 @@ public class PaymentsController {
 
 		// Redis
 		repo.save(payment);
+		String encCC = repo.findById(payment.getId()).get().getCc().getNumber();
 
-		return new PaymentResponse("sorry insufficient funds");
+		return new PaymentResponse(payment.getId(), "Payment processed successfully", request.getNumber(), encCC);
 	}
 
 }
