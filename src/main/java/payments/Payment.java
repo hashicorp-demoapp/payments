@@ -1,0 +1,44 @@
+package payments;
+
+import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.redis.core.index.Indexed;
+import org.springframework.data.annotation.Id;
+
+@RedisHash("payment")
+class Payment {
+
+	@Id
+	private String Id;
+	private String name;
+	private CreditCard cc;
+
+	public String getId() {
+		return Id;
+	}
+
+	public void setId(String id) {
+		Id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public CreditCard getCc() {
+		return cc;
+	}
+
+	public void setCc(CreditCard cc) {
+		this.cc = cc;
+	}
+
+	@Override
+	public String toString() {
+		return "Payment [Id=" + Id + ", name=" + name + ", cc=" + cc + "]";
+	}
+
+}
