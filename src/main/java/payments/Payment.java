@@ -1,7 +1,6 @@
 package payments;
 
 import org.springframework.data.redis.core.RedisHash;
-import org.springframework.data.redis.core.index.Indexed;
 import org.springframework.data.annotation.Id;
 
 @RedisHash("payment")
