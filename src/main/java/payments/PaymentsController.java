@@ -2,7 +2,7 @@ package payments;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
+import javax.persistence.EntityManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +19,13 @@ public class PaymentsController {
 	Logger logger = LoggerFactory.getLogger(PaymentsController.class);
 
 	@Autowired
-	PaymentRepository repo;
+	private EntityManager entityManager;
+
+	@Autowired
+	QueuePaymentRepository queueRepo;
+
+	@Autowired
+	DBPaymentRepository dbRepo;
 
 	@PostMapping("/")
 	@ResponseBody
@@ -39,15 +45,28 @@ public class PaymentsController {
 		cc.setExpiry(request.getExpiry());
 		cc.setCvc(request.getCvc());
 
-		Payment payment = new Payment();
+		RedisPayment payment = new RedisPayment();
 		payment.setName(request.getName());
 		payment.setCc(cc);
 
-		// Redis
-		repo.save(payment);
-		String encCC = repo.findById(payment.getId()).get().getCc().getNumber();
+		// Queue
+		queueRepo.save(payment);
+		// String encCC = queueRepo.findById(payment.getId()).get().getCc().getNumber();
 
-		return new PaymentResponse(payment.getId(), "Payment processed successfully", request.getNumber(), encCC);
+		// DB
+		DBPayment dbPayment = new DBPayment();
+		dbPayment.setName(request.getName());
+		dbPayment.setType(request.getType());
+		dbPayment.setNumber(request.getNumber());
+		dbPayment.setExpiry(request.getExpiry());
+		dbPayment.setCvc(request.getCvc());
+		dbRepo.saveAndFlush(dbPayment);
+
+		entityManager.clear();
+		String encCC = dbRepo.findById(dbPayment.getId()).get().getNumber();
+
+		return new PaymentResponse(dbPayment.getId().toString(), "Payment processed successfully", request.getNumber(),
+				encCC);
 	}
 
 }

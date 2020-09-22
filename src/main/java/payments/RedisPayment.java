@@ -6,7 +6,7 @@ import org.springframework.data.redis.core.RedisHash;
 
 @RedisHash("payment")
 @TypeAlias("payments")
-class Payment {
+class RedisPayment {
 
 	@Id
 	private String Id;
