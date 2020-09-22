@@ -18,14 +18,14 @@ public class CreditCardToMapConverter implements Converter<CreditCard, Map<Strin
 	@Autowired(required = false)
 	VaultOperations vaultOperations;
 
-	@Value("${app.encryption.enabled}")
+	@Value("${app.encryption.enabled:false}")
 	private Boolean encrypt;
 
-	@Value("${app.encryption.key}")
-	private String key;
-
-	@Value("${app.encryption.path}")
+	@Value("${app.encryption.path:transit}")
 	private String path;
+	
+	@Value("${app.encryption.key:payments}")
+	private String key;
 
 	@Override
 	public Map<String, byte[]> convert(CreditCard source) {

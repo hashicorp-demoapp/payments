@@ -13,14 +13,14 @@ import org.springframework.vault.support.VaultResponse;
 @Component
 public class TransformConverter implements AttributeConverter<String, String> {
 
-	@Value("${app.encryption.enabled}")
+	@Value("${app.encryption.enabled:false}")
 	private Boolean encrypt;
 
-	@Value("${app.encryption.key}")
-	private String key;
-
-	@Value("${app.encryption.path}")
+	@Value("${app.encryption.path:transform}")
 	private String path;
+	
+	@Value("${app.encryption.key:payments}")
+	private String key;
 
 	@Autowired(required = false)
 	VaultOperations vaultOperations;
@@ -34,7 +34,6 @@ public class TransformConverter implements AttributeConverter<String, String> {
 			VaultResponse vaultResp = vaultOperations.write(path + "/encode/" + key,
 					Collections.singletonMap("value", cc));
 			cardCipher = vaultResp.getData().get("encoded_value").toString();
-
 		} else {
 			cardCipher = cc;
 		}
