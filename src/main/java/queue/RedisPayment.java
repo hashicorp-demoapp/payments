@@ -1,4 +1,4 @@
-package payments;
+package queue;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
@@ -6,7 +6,7 @@ import org.springframework.data.redis.core.RedisHash;
 
 @RedisHash("payment")
 @TypeAlias("payments")
-class RedisPayment {
+public class RedisPayment {
 
 	@Id
 	private String Id;

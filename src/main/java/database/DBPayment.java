@@ -1,15 +1,15 @@
-package payments;
+package database;
 
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Table;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "payments")
-class DBPayment {
+public class DBPayment {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,12 +53,10 @@ class DBPayment {
 		this.type = type;
 	}
 
-	
 	public String getNumber() {
 		return number;
 	}
 
-	
 	public void setNumber(String number) {
 		this.number = number;
 	}

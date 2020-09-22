@@ -1,7 +1,5 @@
 package payments;
 
-import java.util.UUID;
-
 import com.fasterxml.jackson.annotation.JsonGetter;
 
 class PaymentResponse {
