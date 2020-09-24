@@ -7,7 +7,7 @@ Dummy payments gateway written with Java SpringBoot
 Docker Hub Image: [https://hub.docker.com/repository/docker/hashicorpdemoapp/payments](https://hub.docker.com/repository/docker/hashicorpdemoapp/payments)
 
 ## Usage
-Currently this API has a single endpoint.
+Currently this API has a single endpoint at POST `/` <br>
 There are three controllers you can configure to process a payment from the HashiCups app:
 
 * [REST](src/main/java/payments/RestPaymentController.java)
