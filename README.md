@@ -90,7 +90,7 @@ curl -s -X POST --header "Content-Type: application/json" --data '{"name": "Gerr
 ### DB controller
 
 The DB controller will enable when the `app.storage=db` property is configured. Below is an example with Vault transit encryption enabled.
-The default database for the application controller is the [H2 embedded database](http://www.h2database.com/html/quickstart.html) and requires no additional configuration.
+The default database for the controller is the [H2 embedded database](http://www.h2database.com/html/quickstart.html) and requires no additional configuration.
 The console for the database is located at `/h2-console`. You can login with `sa` & `password` credentials.
 
 vault.sh:
