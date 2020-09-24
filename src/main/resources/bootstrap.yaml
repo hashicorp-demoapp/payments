@@ -1,14 +1,10 @@
 spring:
   cloud:
     vault:
-      enabled: true
+      enabled: false
       fail-fast: true
       authentication: TOKEN
       token: root
       host: localhost
       port: 8200
       scheme: http
-  redis:
-    timeout: 10
-    host: localhost
-    port: 6379

@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -23,7 +24,7 @@ import database.DBPaymentRepository;
 @EntityScan("database")
 @EnableJpaRepositories("database")
 @ComponentScan(basePackages = "database")
-@ConditionalOnMissingBean(RedisPaymentController.class)
+@ConditionalOnProperty(value = "app.storage", havingValue = "db", matchIfMissing = false)
 public class DBPaymentsController {
 
 	Logger logger = LoggerFactory.getLogger(DBPaymentsController.class);
@@ -57,8 +58,9 @@ public class DBPaymentsController {
 		entityManager.clear();
 		String ccCipher = repo.findById(dbPayment.getId()).get().getNumber();
 
-		return new PaymentResponse(dbPayment.getId().toString(), "Payment processed successfully", request.getNumber(),
-				ccCipher);
+		return new PaymentResponse(dbPayment.getId().toString(),
+				"Payment processed successfully, card details returned for demo purposes, not for production",
+				request.getNumber(), ccCipher);
 	}
 
 }

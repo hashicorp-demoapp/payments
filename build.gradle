@@ -15,7 +15,7 @@ apply plugin: 'io.spring.dependency-management'
 
 bootJar {
     baseName = 'spring-boot-payments'
-    version =  '1.0.0'
+    version =  '0.1.0'
 }
 
 repositories {
@@ -34,6 +34,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-data-redis")
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile("com.h2database:h2")
+    compile("org.postgresql:postgresql")
     compile('org.springframework.cloud:spring-cloud-starter-vault-config')
     compile("com.fasterxml.jackson.core:jackson-core")
     compile("com.fasterxml.jackson.core:jackson-annotations")

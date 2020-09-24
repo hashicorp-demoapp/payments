@@ -55,8 +55,9 @@ public class RedisPaymentController {
 		repo.save(payment);
 		String ccCipher = repo.findById(payment.getId()).get().getCc().getNumber();
 
-		return new PaymentResponse(payment.getId().toString(), "Payment processed successfully", request.getNumber(),
-				ccCipher);
+		return new PaymentResponse(payment.getId().toString(),
+				"Payment processed successfully, card details returned for demo purposes, not for production",
+				request.getNumber(), ccCipher);
 	}
 
 }
