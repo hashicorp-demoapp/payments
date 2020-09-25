@@ -77,6 +77,8 @@ spring.redis.host=localhost
 spring.redis.port=6379
 ```
 
+example:
+
 ```
 curl -s -X POST --header "Content-Type: application/json" --data '{"name": "Gerry", "type": "mastercard", "number": "1234-1234-1234-1234", "expiry": "01/23", "cvc": "123"}' localhost:8080  | jq
 {
@@ -113,6 +115,8 @@ app.encryption.enabled=true
 app.encryption.path=transform
 app.encryption.key=payments
 ```
+
+example:
 
 ```
 curl -s -X POST --header "Content-Type: application/json" --data '{"name": "Gerry", "type": "mastercard", "number": "1234-1234-1234-1234", "expiry": "01/23", "cvc": "123"}' localhost:8080  | jq
