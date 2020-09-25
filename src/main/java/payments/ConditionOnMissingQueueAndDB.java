@@ -10,7 +10,7 @@ public class ConditionOnMissingQueueAndDB extends AllNestedConditions {
 		super(ConfigurationPhase.REGISTER_BEAN);
 	}
 
-	@ConditionalOnMissingBean(DBPaymentsController.class)
+	@ConditionalOnMissingBean(DBPaymentController.class)
 	static class OnMissingQueue {
 	}
 

@@ -25,9 +25,9 @@ import database.DBPaymentRepository;
 @EnableJpaRepositories("database")
 @ComponentScan(basePackages = "database")
 @ConditionalOnProperty(value = "app.storage", havingValue = "db", matchIfMissing = false)
-public class DBPaymentsController {
+public class DBPaymentController {
 
-	Logger logger = LoggerFactory.getLogger(DBPaymentsController.class);
+	Logger logger = LoggerFactory.getLogger(DBPaymentController.class);
 
 	@Autowired
 	private EntityManager entityManager;

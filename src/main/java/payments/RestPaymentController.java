@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class RestPaymentController {
 
-	Logger logger = LoggerFactory.getLogger(DBPaymentsController.class);
+	Logger logger = LoggerFactory.getLogger(RestPaymentController.class);
 
 	@PostMapping("/")
 	@ResponseBody
