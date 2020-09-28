@@ -1,11 +1,11 @@
 build:
-	gradle build
+	./gradlew build
 
 clean:
-	gradle clean
+	./gradlew clean
 
 run:
-	gradle build
+	./gradlew build
 	java -jar build/libs/spring-boot-payments-0.0.3.jar
 
 build_docker:
