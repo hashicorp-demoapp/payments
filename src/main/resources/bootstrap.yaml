@@ -1,0 +1,10 @@
+spring:
+  cloud:
+    vault:
+      enabled: false
+      fail-fast: true
+      authentication: TOKEN
+      token: root
+      host: localhost
+      port: 8200
+      scheme: http
