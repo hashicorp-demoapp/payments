@@ -64,6 +64,7 @@ jobs:
          name: docker push
          command: |
            docker push hashicorpdemoapp/payments:${CIRCLE_TAG}
+           docker push hashicorpdemoapp/payments:latest
 
   publish-github-release:
     docker:
