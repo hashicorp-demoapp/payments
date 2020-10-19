@@ -59,13 +59,11 @@ jobs:
      - run:
          name: docker build
          command: |
-           docker build -t hashicorpdemoapp/payments:${CIRCLE_TAG} .
-           docker build -t hashicorpdemoapp/payments:latest .
+           docker build -t hashicorpdemoapp/payments:latest -t hashicorpdemoapp/payments:${CIRCLE_TAG} .
      - run:
          name: docker push
          command: |
-           docker push hashicorpdemoapp/payments:${CIRCLE_TAG}
-           docker push hashicorpdemoapp/payments:latest
+           docker push hashicorpdemoapp/payments
 
   publish-github-release:
     docker:
