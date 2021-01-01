@@ -15,7 +15,7 @@ apply plugin: 'io.spring.dependency-management'
 
 bootJar {
     baseName = 'spring-boot-payments'
-    version =  '0.0.6'
+    version =  '0.0.7'
 }
 
 repositories {
@@ -40,6 +40,8 @@ dependencies {
     compile("com.fasterxml.jackson.core:jackson-core")
     compile("com.fasterxml.jackson.core:jackson-annotations")
     compile('org.springframework.boot:spring-boot-starter-log4j2')
+    compile('io.opentracing.contrib:opentracing-spring-jaeger-web-starter:3.2.2')
+    compile('io.opentracing.contrib:opentracing-spring-jaeger-cloud-starter:3.2.2')
     
     testCompile("junit:junit")
 }
