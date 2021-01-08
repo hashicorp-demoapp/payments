@@ -36,7 +36,7 @@ curl -s -X POST --header "Content-Type: application/json" --data /
 }
 ```
 
-### Redis controller
+### Redis Controller
 
 The Redis controller will enable when the `app.storage=redis` property is configured. Below is an example with Vault transit encryption enabled.
 
@@ -70,7 +70,7 @@ curl -s -X POST --header "Content-Type: application/json" --data '{"name": "Gerr
 }
 ```
 
-### DB controller
+### DB Controller
 
 The DB controller will enable when the `app.storage=db` property is configured. Below is an example with Vault transit encryption enabled.
 The default database for the controller is the [H2 embedded database](http://www.h2database.com/html/quickstart.html) and requires no additional configuration.
