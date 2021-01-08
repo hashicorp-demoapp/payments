@@ -8,40 +8,22 @@ Docker Hub Image: [https://hub.docker.com/repository/docker/hashicorpdemoapp/pay
 
 ## Usage
 Currently this API has a single endpoint at POST `/` <br>
+
+See below for how to use each controller. You can override any of the [default property files](src/main/resources) using [external config for Spring](https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-external-config).
+
+The most simple option to override is place the files in the [current directory](https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-external-config-application-property-files).
+
+## Controllers
+
 There are three controllers you can configure to process a payment from the HashiCups app:
 
 * [REST](src/main/java/payments/RestPaymentController.java)
 * [Redis](src/main/java/payments/RedisPaymentController.java)
 * [Database](src/main/java/payments/DBPaymentController.java)
 
-See below for how to use each controller. You can override any of the [default property files](src/main/resources) using [external config for Spring](https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-external-config).
+### REST Controller
 
-The most simple option to override is place the files in the [current directory](https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-external-config-application-property-files).
-
-## Vault Encryption
-Vault encryption is available for the Redis controller leveraging [transit](https://www.vaultproject.io/docs/secrets/transit), and the DB payment controller leveraging [transform](https://www.vaultproject.io/docs/secrets/transform).
-
-
-You will need to provide a valid bootstrap file pointing to your Vault instance to enable the Vault integration. Below is an example for token authentication. See [the Spring Cloud Vault documentation](https://cloud.spring.io/spring-cloud-vault/reference/html/#vault.config.authentication) for all available auth methods.
-
-bootstrap.yaml
-
-```
-spring:
-  cloud:
-    vault:
-      enabled: true
-      fail-fast: true
-      authentication: TOKEN
-      token: root
-      host: localhost
-      port: 8200
-      scheme: http
-```
-
-### REST controller
-
-This controller is configured by default and no additional steps are required.
+This REST controller is configured by default and no additional steps are required.
 
 ```
 curl -s -X POST --header "Content-Type: application/json" --data /
@@ -53,7 +35,6 @@ curl -s -X POST --header "Content-Type: application/json" --data /
   "card_ciphertext": "Encryption Disabled"
 }
 ```
-
 
 ### Redis controller
 
@@ -153,5 +134,28 @@ spring:
       hibernate:
         temp:
           use_jdbc_metadata_defaults: false
+```
+
+## Vault Encryption
+Vault encryption is available for the Redis controller leveraging [transit](https://www.vaultproject.io/docs/secrets/transit), and the DB payment controller leveraging [transform](https://www.vaultproject.io/docs/secrets/transform).
+
+
+You will need to provide a valid bootstrap file pointing to your Vault instance to enable the Vault integration. Below is an example for token authentication. See [the Spring Cloud Vault documentation](https://cloud.spring.io/spring-cloud-vault/reference/html/#vault.config.authentication) for all available auth methods.
+
+bootstrap.yaml
 
 ```
+spring:
+  cloud:
+    vault:
+      enabled: true
+      fail-fast: true
+      authentication: TOKEN
+      token: root
+      host: localhost
+      port: 8200
+      scheme: http
+```
+
+## Tracing
+The app exposes Jaeger options that are [documented here](https://github.com/opentracing-contrib/java-spring-jaeger#configuration-options).
