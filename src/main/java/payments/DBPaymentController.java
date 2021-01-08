@@ -1,5 +1,7 @@
 package payments;
 
+import java.util.HashMap;
+
 import javax.persistence.EntityManager;
 
 import org.slf4j.Logger;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import database.DBPayment;
 import database.DBPaymentRepository;
+import io.opentracing.Span;
+import io.opentracing.Tracer;
 
 @RestController
 @Component
@@ -28,6 +32,9 @@ import database.DBPaymentRepository;
 public class DBPaymentController {
 
 	Logger logger = LoggerFactory.getLogger(DBPaymentController.class);
+	
+	@Autowired
+	Tracer tracer;
 
 	@Autowired
 	private EntityManager entityManager;
@@ -39,7 +46,7 @@ public class DBPaymentController {
 	@ResponseBody
 	public PaymentResponse pay(@RequestBody PaymentRequest request) {
 
-		// Log it
+		// Log it - stdout
 		logger.info("New payment");
 		logger.info("Fullname: {}", request.getName());
 		logger.info("CC Type: {}", request.getType());
@@ -47,6 +54,10 @@ public class DBPaymentController {
 		logger.info("CC Expiration: {}", request.getExpiry());
 		logger.info("CC CVC: {}", request.getCvc());
 
+		// Log it - trace
+		Span cardSpan = tracer.buildSpan("process card").start();
+		
+		// Put the payment in the DB
 		DBPayment dbPayment = new DBPayment();
 		dbPayment.setName(request.getName());
 		dbPayment.setType(request.getType());
@@ -54,9 +65,17 @@ public class DBPaymentController {
 		dbPayment.setExpiry(request.getExpiry());
 		dbPayment.setCvc(request.getCvc());
 		repo.saveAndFlush(dbPayment);
-
 		entityManager.clear();
+		
+		// close span
 		String ccCipher = repo.findById(dbPayment.getId()).get().getNumber();
+		HashMap<String, String> cardSpanMap = new HashMap<>();
+		cardSpanMap.put("name", request.getName());
+		cardSpanMap.put("type", request.getType());
+		cardSpanMap.put("number", ccCipher);
+		cardSpanMap.put("exp", request.getExpiry());
+		cardSpan.log(cardSpanMap);
+		cardSpan.finish();
 
 		return new PaymentResponse(dbPayment.getId().toString(),
 				"Payment processed successfully, card details returned for demo purposes, not for production",
