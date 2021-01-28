@@ -124,7 +124,7 @@ spring:
     password: postgres
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update 
     show-sql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
@@ -134,6 +134,14 @@ spring:
       hibernate:
         temp:
           use_jdbc_metadata_defaults: false
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: '*'
 ```
 
 ## Vault Encryption
