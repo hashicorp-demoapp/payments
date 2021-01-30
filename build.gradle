@@ -15,7 +15,7 @@ apply plugin: 'io.spring.dependency-management'
 
 bootJar {
     baseName = 'spring-boot-payments'
-    version =  '0.0.9'
+    version =  '0.0.10'
 }
 
 repositories {
