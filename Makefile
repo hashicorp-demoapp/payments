@@ -12,4 +12,4 @@ build_docker:
 	docker build -t hashicorpdemoapp/payments:v0.0.11 .
 
 push_docker: build_docker
-	docker push hashicorpdemoapp/payments:latest
+	docker push hashicorpdemoapp/payments:v0.0.11
