@@ -40,6 +40,7 @@ dependencies {
     compile('io.opentracing.contrib:opentracing-spring-jaeger-cloud-starter:3.2.2')
     compile("com.h2database:h2")
     compile("org.postgresql:postgresql")
+    compile("de.codecentric:chaos-monkey-spring-boot:2.3.9")
     
     testCompile("junit:junit")
 }
