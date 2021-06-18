@@ -15,6 +15,10 @@ spring:
       settings:
         web-allow-others: true
 management:
-  endpoint:
-    health:
-      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics, prometheus
+    endpoint:
+      health:
+        show-details: always
