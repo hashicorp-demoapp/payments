@@ -19,6 +19,6 @@ management:
     web:
       exposure:
         include: health, metrics, prometheus
-    endpoint:
-      health:
-        show-details: always
+  endpoint:
+    health:
+      show-details: always
