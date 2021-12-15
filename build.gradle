@@ -1,3 +1,13 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+repositories {
+    mavenCentral()
+}
+
 buildscript {
     repositories {
         mavenCentral()
@@ -7,32 +17,23 @@ buildscript {
     }
 }
 
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
-
-bootJar {
-    archiveBaseName = 'spring-boot-payments'
-    archiveVersion =  '0.0.12'
-}
-
-repositories {
-    mavenCentral()
-}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 ext {
     springCloudVersion = 'Hoxton.SR9'
 }
+ext["log4j2.version"] = "2.15.0"
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+bootJar {
+    archiveBaseName = 'spring-boot-payments'
+    archiveVersion =  '0.0.13'
+}
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation "org.springframework.boot:spring-boot-starter-log4j2"
     implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation('org.springframework.boot:spring-boot-starter-log4j2')
     implementation('org.springframework.cloud:spring-cloud-starter-vault-config')
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -42,15 +43,12 @@ dependencies {
     implementation("org.postgresql:postgresql")
     implementation("de.codecentric:chaos-monkey-spring-boot:2.3.9")
     implementation('io.micrometer:micrometer-registry-prometheus:1.7.0')
-    
-    
+    modules {
+        module("org.springframework.boot:spring-boot-starter-logging") {
+            replacedBy("org.springframework.boot:spring-boot-starter-log4j2", "Use Log4j2 instead of Logback")
+        }
+    }
     testImplementation("junit:junit")
-}
-
-configurations {
-	all {
-		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
-	}
 }
 
 dependencyManagement {
