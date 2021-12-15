@@ -13,7 +13,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.3.7.RELEASE")
+        classpath('org.springframework.boot:spring-boot-gradle-plugin:2.3.7.RELEASE')
     }
 }
 
@@ -23,7 +23,7 @@ targetCompatibility = 1.8
 ext {
     springCloudVersion = 'Hoxton.SR9'
 }
-ext["log4j2.version"] = "2.15.0"
+ext['log4j2.version'] = '2.15.0'
 
 bootJar {
     archiveBaseName = 'spring-boot-payments'
@@ -31,24 +31,24 @@ bootJar {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation "org.springframework.boot:spring-boot-starter-log4j2"
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+    implementation('org.springframework.boot:spring-boot-starter-actuator')
     implementation('org.springframework.cloud:spring-cloud-starter-vault-config')
-    implementation("org.springframework.boot:spring-boot-starter-data-redis")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation('org.springframework.boot:spring-boot-starter-data-redis')
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
     implementation('io.opentracing.contrib:opentracing-spring-jaeger-web-starter:3.2.2')
     implementation('io.opentracing.contrib:opentracing-spring-jaeger-cloud-starter:3.2.2')
-    implementation("com.h2database:h2")
-    implementation("org.postgresql:postgresql")
-    implementation("de.codecentric:chaos-monkey-spring-boot:2.3.9")
+    implementation('com.h2database:h2')
+    implementation('org.postgresql:postgresql')
+    implementation('de.codecentric:chaos-monkey-spring-boot:2.3.9')
     implementation('io.micrometer:micrometer-registry-prometheus:1.7.0')
     modules {
-        module("org.springframework.boot:spring-boot-starter-logging") {
-            replacedBy("org.springframework.boot:spring-boot-starter-log4j2", "Use Log4j2 instead of Logback")
+        module('org.springframework.boot:spring-boot-starter-logging') {
+            replacedBy('org.springframework.boot:spring-boot-starter-log4j2', 'Use Log4j2 instead of Logback')
         }
     }
-    testImplementation("junit:junit")
+    testImplementation('junit:junit')
 }
 
 dependencyManagement {
