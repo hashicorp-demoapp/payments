@@ -27,7 +27,7 @@ ext['log4j2.version'] = '2.16.0'
 
 bootJar {
     archiveBaseName = 'spring-boot-payments'
-    archiveVersion =  '0.0.14'
+    archiveVersion =  '0.0.15'
 }
 
 dependencies {
@@ -41,7 +41,7 @@ dependencies {
     implementation('io.opentracing.contrib:opentracing-spring-jaeger-cloud-starter:3.2.2')
     implementation('com.h2database:h2')
     implementation('org.postgresql:postgresql')
-    implementation('de.codecentric:chaos-monkey-spring-boot:2.3.9')
+    implementation('de.codecentric:chaos-monkey-spring-boot:2.5.0')
     implementation('io.micrometer:micrometer-registry-prometheus:1.7.0')
     modules {
         module('org.springframework.boot:spring-boot-starter-logging') {
