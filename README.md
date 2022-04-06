@@ -13,6 +13,50 @@ See below for how to use each controller. You can override any of the [default p
 
 The most simple option to override is place the files in the [current directory](https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-external-config-application-property-files).
 
+## Health Checks
+Spring Actuator is enabled for health checks.
+
+```
+curl -s localhost:8080/actuator/health | jq
+{
+  "status": "UP",
+  "components": {
+    "db": {
+      "status": "UP",
+      "details": {
+        "database": "H2",
+        "validationQuery": "isValid()"
+      }
+    },
+    "discoveryComposite": {
+      "description": "Discovery Client not initialized",
+      "status": "UNKNOWN",
+      "components": {
+        "discoveryClient": {
+          "description": "Discovery Client not initialized",
+          "status": "UNKNOWN"
+        }
+      }
+    },
+    "diskSpace": {
+      "status": "UP",
+      "details": {
+        "total": 499963174912,
+        "free": 233270890496,
+        "threshold": 10485760,
+        "exists": true
+      }
+    },
+    "ping": {
+      "status": "UP"
+    },
+    "refreshScope": {
+      "status": "UP"
+    }
+  }
+}
+```
+
 ## Controllers
 
 There are three controllers you can configure to process a payment from the HashiCups app:
